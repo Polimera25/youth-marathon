@@ -1,0 +1,59 @@
+{% extends 'registrations/base.html' %}
+{% load form_extras %}
+
+{% block title %}Register for a Race{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Register</h1>
+<form method="post" class="bg-white rounded-2xl shadow p-6 space-y-4">
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+    <div class="bg-red-100 text-red-800 p-3 rounded">{{ form.non_field_errors }}</div>
+  {% endif %}
+  <div class="grid md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium">Race</label>
+      {{ form.race|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
+    <div>
+      <label class="block text-sm font-medium">First name</label>
+      {{ form.first_name|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Last name</label>
+      {{ form.last_name|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Email</label>
+      {{ form.email|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Phone</label>
+      {{ form.phone|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Age</label>
+      {{ form.age|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
+    <div>
+      <label class="block text-sm font-medium">Gender</label>
+      {{ form.gender|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
+    <div>
+      <label class="block text-sm font-medium">T-Shirt Size</label>
+      {{ form.tshirt_size|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
+  </div>
+  <button class="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700">Submit</button>
+</form>
+
+<script>
+  // Preselect race from querystring if provided
+  const params = new URLSearchParams(window.location.search);
+  const raceId = params.get('race');
+  if (raceId) {
+    const select = document.querySelector('select[name="race"]');
+    if (select) select.value = raceId;
+  }
+</script>
+{% endblock %}
+

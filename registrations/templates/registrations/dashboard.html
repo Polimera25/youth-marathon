@@ -1,0 +1,49 @@
+{% extends 'registrations/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Dashboard</h1>
+<div class="grid md:grid-cols-3 gap-4">
+  <div class="bg-white rounded-2xl shadow p-6">
+    <div class="text-sm text-gray-500">Total Runners</div>
+    <div class="text-3xl font-extrabold">{{ total_runners }}</div>
+  </div>
+  <div class="bg-white rounded-2xl shadow p-6">
+    <div class="text-sm text-gray-500">Total Registrations</div>
+    <div class="text-3xl font-extrabold">{{ total_regs }}</div>
+  </div>
+  <div class="bg-white rounded-2xl shadow p-6">
+    <div class="text-sm text-gray-500">Races</div>
+    <div class="text-3xl font-extrabold">{{ races|length }}</div>
+  </div>
+</div>
+
+<h2 class="text-xl font-semibold mt-8 mb-3">Races</h2>
+<div class="bg-white rounded-2xl shadow overflow-x-auto">
+  <table class="min-w-full text-sm">
+    <thead class="bg-gray-100"><tr>
+      <th class="text-left p-3">Race</th>
+      <th class="text-left p-3">Date</th>
+      <th class="text-left p-3">Distance</th>
+      <th class="text-left p-3">Capacity</th>
+      <th class="text-left p-3">Registrations</th>
+      <th class="text-left p-3">Actions</th>
+    </tr></thead>
+    <tbody>
+      {% for r in races %}
+      <tr class="border-t">
+        <td class="p-3 font-medium">{{ r.name }}</td>
+        <td class="p-3">{{ r.date }}</td>
+        <td class="p-3">{{ r.distance_km }} km</td>
+        <td class="p-3">{{ r.capacity }}</td>
+        <td class="p-3">{{ r.count }}</td>
+        <td class="p-3">
+          <a class="underline" href="{% url 'registrations:participants' r.id %}">View</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td class="p-3" colspan="6">No races yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

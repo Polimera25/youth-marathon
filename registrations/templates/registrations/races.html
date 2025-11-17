@@ -1,0 +1,24 @@
+{% extends 'registrations/base.html' %}
+{% block title %}Marathon – Races{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Upcoming Races</h1>
+<div class="grid md:grid-cols-2 gap-6">
+  {% for race in races %}
+  <div class="bg-white rounded-2xl shadow p-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-semibold">{{ race.name }}</h2>
+      <span class="text-sm bg-gray-100 px-2 py-1 rounded">Capacity: {{ race.capacity }}</span>
+    </div>
+    <p class="text-gray-600 mt-2">{{ race.location }} • {{ race.date }} • {{ race.distance_km }} km</p>
+    <p class="mt-2 text-sm">Registered: <strong>{{ race.registered }}</strong></p>
+    <div class="mt-4 flex gap-3">
+      <a href="{% url 'registrations:register' %}?race={{ race.id }}" class="px-4 py-2 rounded-xl bg-blue-600 text-white">Register</a>
+      <a href="{% url 'registrations:participants' race.id %}" class="px-4 py-2 rounded-xl bg-gray-200">View Participants</a>
+      <a href="{% url 'registrations:export_csv' race.id %}" class="px-4 py-2 rounded-xl bg-gray-200">Export CSV</a>
+    </div>
+  </div>
+  {% empty %}
+  <p>No races yet. Add some in <a href="/admin/" class="underline">Admin</a>.</p>
+  {% endfor %}
+</div>
+{% endblock %}

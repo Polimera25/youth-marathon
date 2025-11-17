@@ -1,0 +1,298 @@
+{% extends 'registrations/base.html' %}
+
+{% load static %}
+
+
+{% block title %}City Marathon 2025{% endblock %}
+
+{% block content %}
+
+<!-- Splash Screen -->
+<div id="splash" class="fixed inset-0 bg-gradient-to-r from-orange-500 to-blue-600 flex flex-col items-center justify-center z-50">
+  <img src="{% static 'logo.png' %}" alt="Logo" class="w-28 h-28 animate-bounce mb-4 rounded-lg shadow-lg overflow-hidden">
+  <h1 class="text-3xl font-bold text-white"></h1>
+  <p class="text-lg text-white mt-2">Powered by <span class="font-semibold">VB Educators</span></p>
+</div>
+
+<!-- Hero Section -->
+<!-- Hero Carousel with Fade Animation & Responsive Height -->
+<section 
+  x-data="{ 
+    current: 0, 
+    slides: [
+      '{% static "Banner.png" %}', 
+      '{% static "NPG_8131.jpg" %}', 
+      '{% static "NPG_8172.jpg" %}'
+    ],
+    init() {
+      setInterval(() => {
+        this.current = (this.current + 1) % this.slides.length;
+      }, 5000); // Auto-slide every 5 seconds
+    }
+  }" 
+  class="relative w-full h-[250px] md:h-[400px] lg:h-[550px] overflow-hidden"
+>
+
+  <!-- Slides -->
+  <template x-for="(slide, index) in slides" :key="index">
+    <div 
+      x-show="current === index" 
+      class="absolute inset-0"
+      x-transition:enter="transition ease-out duration-1000"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-1000"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+    >
+      <img :src="slide" alt="Marathon Banner" class="w-full h-full object-cover">
+      <div class="absolute inset-0 flex flex-col justify-end md:justify-center items-center text-center bg-black bg-opacity-40 text-white px-4 pb-6 md:pb-0">
+        <h1 class="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-2 md:mb-4 leading-tight">
+            Youth Marathon 2026
+        </h1>
+        <p class="text-sm sm:text-base md:text-lg mb-4 md:mb-6 max-w-xl">
+            Join the ultimate running experience in Vizag!
+        </p>
+        
+        <div class="flex flex-wrap justify-center gap-3 md:gap-8 text-gray-200 mb-4 md:mb-6 text-xs sm:text-sm md:text-base">
+            <div>📅 Jan 04, 2026</div>
+            <div>📍 Gajuwaka, Visakhaptnam</div>
+            <div>⏰ 4:00 AM</div>
+        </div>
+
+        <div id="countdown" class="text-base sm:text-lg md:text-2xl font-bold mb-4 md:mb-6"></div>
+        
+        <a href="{% url 'registrations:race_list' %}" 
+            class="px-3 sm:px-4 md:px-6 py-2 md:py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 text-xs sm:text-sm md:text-base">
+            Register Now
+        </a>
+        </div>
+
+    </div>
+  </template>
+
+  <!-- Controls -->
+  <button @click="current = (current - 1 + slides.length) % slides.length" 
+          class="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-40 hover:bg-opacity-70 text-black px-2 md:px-3 py-1 rounded-full">
+    ‹
+  </button>
+  <button @click="current = (current + 1) % slides.length" 
+          class="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-40 hover:bg-opacity-70 text-black px-2 md:px-3 py-1 rounded-full">
+    ›
+  </button>
+
+  <!-- Indicators -->
+  <div class="absolute bottom-3 md:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+    <template x-for="(slide, index) in slides" :key="index">
+      <button @click="current = index" 
+              :class="{'bg-white': current === index, 'bg-gray-400': current !== index}" 
+              class="w-2 h-2 md:w-3 md:h-3 rounded-full transition"></button>
+    </template>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-16 max-w-5xl mx-auto text-center">
+  <h2 class="text-3xl font-bold mb-4">About the Marathon</h2>
+  <p class="text-gray-700 text-lg leading-relaxed">
+    The Youth Marathon – 2nd Edition is being organized to mark the auspicious occasion of National Youth Day and the birth anniversary of Sri Swami Vivekananda. This event celebrates the ideals of strength, unity, discipline, and service that Swami Vivekananda stood for.
+  </p>
+  
+  <p class="text-gray-700 text-lg font-semibold leading-relaxed">
+    With every stride, we pay tribute to the visionary monk who believed that “Youth are the real nation builders.”
+  </p>
+</section>
+
+<!-- Race Categories Section -->
+<section id="Race Categories" class="py-16">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-8">Race Categories</h2>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {% for race in races %}
+        <div class="bg-white shadow rounded-xl p-6 text-left hover:shadow-lg transition">
+          <h3 class="text-xl font-semibold mb-2">{{ race.name }}</h3>
+          <p class="text-gray-600 text-sm mb-1">
+            📍 {{ race.location }}
+          </p>
+          <p class="text-gray-600 text-sm mb-1">
+            📅 {{ race.date|date:"M d, Y" }}
+          </p>
+          <p class="text-gray-600 text-sm mb-4">
+            🏃 {{ race.distance }} km
+          </p>
+          <a href="{% url 'registrations:register' %}?race={{ race.id }}" 
+             class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+            Register
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Mission -->
+<section class="py-16 max-w-5xl mx-auto text-center">
+  <h2 class="text-3xl font-bold mb-4">Our Mission</h2>
+  <p class="text-gray-700 text-lg leading-relaxed">
+    <ul>
+      <li>To encourage physical fitness, mental strength, and healthy lifestyles among youth.</li>
+      <li>To instill Swami Vivekananda’s teachings of discipline, self-belief, and service to society.</li>
+      <li>To create awareness on the importance of youth participation in nation-building.</li>
+    </ul>
+  </p>
+</section>
+<!-- Vission -->
+<section class="py-16 max-w-5xl mx-auto text-center">
+  <h2 class="text-3xl font-bold mb-4">Our Vission</h2>
+  <p class="text-gray-700 text-lg leading-relaxed">
+    <ul>
+      <li>To build an annual flagship marathon that stands as a symbol of youth power and collective responsibility.</li>
+      <li>To create a generation of inspired, confident, and socially responsible young leaders.</li>
+      <li>To promote a culture where fitness, unity, and service go hand in hand.</li>
+    </ul>
+  </p>
+</section>
+<!-- Event Facilities -->
+<section class="py-16 max-w-5xl mx-auto text-center">
+  <h2 class="text-3xl font-bold mb-4">Event Facilities</h2>
+  <img src="{% static 'event_facilities.png' %}" alt="Logo" class="w-full h-full  mb-4 rounded-lg shadow-lg overflow-hidden">
+</section>
+
+
+{% load static %}
+{{ gallery_images|json_script:"gallery-data" }}
+
+<section id="gallery" class="py-16 bg-blue-300">
+  <div class="max-w-5xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-8">Past Edition</h2>
+
+    <div 
+      x-data="{ 
+        current: 0, 
+        slides: JSON.parse(document.getElementById('gallery-data').textContent),
+        init() {
+          if (this.slides.length > 0) {
+            setInterval(() => {
+              this.current = (this.current + 1) % this.slides.length
+            }, 5000)
+          }
+        }
+      }" 
+      class="relative w-full max-w-5xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden"
+      style="height: 600px;"
+    >
+
+      <!-- Slides -->
+      <template x-for="(slide, index) in slides" :key="index">
+        <div 
+          x-show="current === index" 
+          class="absolute inset-0"
+          x-transition:enter="transition ease-out duration-700"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-700"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+        >
+          <!-- FIXED PATH CONCAT -->
+          <img :src="`{% static '' %}${slide}`" 
+               alt="Gallery Image" 
+               class="w-full h-full object-cover rounded-lg">
+        </div>
+      </template>
+
+      <!-- Controls -->
+      <button @click="current = (current - 1 + slides.length) % slides.length" 
+              class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 hover:bg-opacity-70 text-white px-3 py-1 rounded-full">
+        ‹
+      </button>
+      <button @click="current = (current + 1) % slides.length" 
+              class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 hover:bg-opacity-70 text-white px-3 py-1 rounded-full">
+        ›
+      </button>
+
+      <!-- Indicators -->
+      <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        <template x-for="(slide, index) in slides" :key="index">
+          <button @click="current = index" 
+                  :class="{'bg-white': current === index, 'bg-gray-500': current !== index}" 
+                  class="w-3 h-3 rounded-full"></button>
+        </template>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Route Map -->
+<section class="py-16 max-w-5xl mx-auto text-center">
+  <h2 class="text-3xl font-bold mb-4">Route Map</h2>
+  
+</section>
+
+<!-- Our Sponsors -->
+<section class="py-16 max-w-5xl mx-auto text-center">
+  <h2 class="text-3xl font-bold mb-4">Our Sponsors</h2>
+  
+</section>
+
+<!-- Our Partners -->
+<section class="py-16 max-w-5xl mx-auto text-center">
+  <h2 class="text-3xl font-bold mb-4">Our Partners</h2>
+  
+</section>
+
+
+
+<!-- Contact -->
+<section id="contact"  class="py-16 text-center">
+  <h2 class="text-3xl font-bold mb-4">Contact Us</h2>
+  <p>Email: info@youthmarathon.com</p>
+  <p>Phone: +91 8688272429</p>
+</section>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+    // Check if splash was already shown
+    if (localStorage.getItem("splashShown")) {
+      // Skip splash
+      document.getElementById("splash").style.display = "none";
+      document.getElementById("main-content").classList.remove("hidden");
+    } else {
+      // Show splash, then hide after 2.5s
+      setTimeout(() => {
+        document.getElementById("splash").classList.add("hidden");
+        document.getElementById("main-content").classList.remove("hidden");
+        // Remember that splash has been shown
+        localStorage.setItem("splashShown", "true");
+      }, 2500);
+    }
+  });
+// Countdown Timer
+const raceDate = new Date("Dec 15, 2025 07:00:00").getTime();
+const timer = setInterval(() => {
+  const now = new Date().getTime();
+  const distance = raceDate - now;
+  if (distance < 0) {
+    document.getElementById("countdown").innerText = "Race Started!";
+    clearInterval(timer);
+    return;
+  }
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+  const mins = Math.floor((distance % (1000*60*60))/(1000*60));
+  document.getElementById("countdown").innerText = `${days}d ${hours}h ${mins}m`;
+}, 1000);
+</script>
+
+<!-- Sticky Register Button (Mobile Only) -->
+<div class="fixed bottom-0 left-0 right-0 bg-blue-600 text-white py-3 text-center md:hidden z-50 shadow-lg">
+  <a href="{% url 'registrations:race_list' %}" 
+     class="font-semibold text-sm sm:text-base">
+     🏃 Register Now
+  </a>
+</div>
+
+
+{% endblock %}
