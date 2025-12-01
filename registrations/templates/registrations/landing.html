@@ -60,7 +60,7 @@
             <div>⏰ 4:00 AM</div>
         </div>
 
-        <div id="countdown" class="text-base sm:text-lg md:text-2xl font-bold mb-4 md:mb-6"></div>
+        <!--<div id="countdown" class="text-base sm:text-lg md:text-2xl font-bold mb-4 md:mb-6"></div>-->
         
         <a href="{% url 'registrations:race_list' %}" 
             class="px-3 sm:px-4 md:px-6 py-2 md:py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 text-xs sm:text-sm md:text-base">
@@ -160,7 +160,7 @@
 </section>
 
 
-{% load static %}
+<!--{% load static %}
 {{ gallery_images|json_script:"gallery-data" }}
 
 <section id="gallery" class="py-16 bg-blue-300">
@@ -183,7 +183,7 @@
       style="height: 600px;"
     >
 
-      <!-- Slides -->
+      Slides 
       <template x-for="(slide, index) in slides" :key="index">
         <div 
           x-show="current === index" 
@@ -195,14 +195,14 @@
           x-transition:leave-start="opacity-100"
           x-transition:leave-end="opacity-0"
         >
-          <!-- FIXED PATH CONCAT -->
+           FIXED PATH CONCAT 
           <img :src="`{% static '' %}${slide}`" 
                alt="Gallery Image" 
                class="w-full h-full object-cover rounded-lg">
         </div>
       </template>
 
-      <!-- Controls -->
+      Controls 
       <button @click="current = (current - 1 + slides.length) % slides.length" 
               class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-40 hover:bg-opacity-70 text-white px-3 py-1 rounded-full">
         ‹
@@ -212,7 +212,7 @@
         ›
       </button>
 
-      <!-- Indicators -->
+      Indicators 
       <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
         <template x-for="(slide, index) in slides" :key="index">
           <button @click="current = index" 
@@ -222,7 +222,83 @@
       </div>
     </div>
   </div>
+</section>-->
+
+{% load static %}
+{{ gallery_images|json_script:"gallery-data" }}
+
+<section id="gallery" class="py-16 bg-blue-300">
+  <div class="max-w-5xl mx-auto text-center">
+    <h2 class="text-3xl font-bold mb-8">1st Edition Gallery</h2>
+
+    <div 
+      x-data="{ 
+        current: 0, 
+        slides: JSON.parse(document.getElementById('gallery-data').textContent),
+        init() {
+          if (this.slides.length > 0) {
+            setInterval(() => {
+              this.current = (this.current + 1) % this.slides.length
+            }, 5000)
+          }
+        }
+      }" 
+      class="relative w-full max-w-5xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden
+             h-[280px] sm:h-[350px] md:h-[450px] lg:h-[550px]"
+    >
+
+      <!-- Slides -->
+      <template x-for="(slide, index) in slides" :key="index">
+        <div 
+          x-show="current === index" 
+          class="absolute inset-0 flex items-center justify-center"
+          x-transition:enter="transition ease-out duration-700"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition ease-in duration-700"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+        >
+          <img 
+            :src="`{% static '' %}${slide}`" 
+            alt="Gallery Photo" 
+            class="w-full h-full object-contain md:object-cover rounded-lg bg-black"
+          >
+        </div>
+      </template>
+
+      <!-- Controls -->
+      <button 
+        @click="current = (current - 1 + slides.length) % slides.length" 
+        class="absolute left-4 top-1/2 transform -translate-y-1/2 
+               bg-black/40 hover:bg-black/70 text-white px-3 py-1 rounded-full text-2xl">
+        ‹
+      </button>
+
+      <button 
+        @click="current = (current + 1) % slides.length" 
+        class="absolute right-4 top-1/2 transform -translate-y-1/2 
+               bg-black/40 hover:bg-black/70 text-white px-3 py-1 rounded-full text-2xl">
+        ›
+      </button>
+
+      <!-- Indicators -->
+      <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        <template x-for="(slide, index) in slides" :key="index">
+          <button 
+            @click="current = index"
+            :class="{
+              'bg-white scale-110': current === index, 
+              'bg-gray-500': current !== index
+            }" 
+            class="w-3 h-3 rounded-full transition"></button>
+        </template>
+      </div>
+
+    </div>
+  </div>
 </section>
+
 
 <!-- Route Map -->
 <section class="py-16 max-w-5xl mx-auto text-center">
