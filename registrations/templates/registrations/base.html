@@ -71,14 +71,14 @@
     </div>
 
     <!-- Mobile Dropdown Menu -->
-    <div x-show="open" class="md:hidden bg-white border-t border-gray-200 text-gray-900">
+    <div x-show="open" x-transition.duration.300ms class="md:hidden bg-gradient-to-b from-orange-500 via-orange-600 to-blue-700 text-white border-t border-white/20 shadow-lg">
       <div class="flex flex-col space-y-2 px-4 py-3">
-        <a href="{% url 'registrations:landing' %}" class="hover:text-blue-600">Home</a>
-        <a href="{% url 'registrations:landing' %}#about" class="hover:text-blue-600">About Us</a>
-        <a href="{% url 'registrations:race_list' %}" class="hover:text-blue-600">Race Categories</a>
-        <a href="{% url 'registrations:landing' %}#gallery" class="hover:text-blue-600">Gallery</a>
-        <a href="{% url 'registrations:landing' %}#contact" class="hover:text-blue-600">Contact Us</a>
-        <a href="{% url 'registrations:register' %}" class="hover:text-blue-600">Register</a>
+        <a href="{% url 'registrations:landing' %}" class="py-2 hover:bg-white/10 rounded-lg">Home</a>
+        <a href="{% url 'registrations:landing' %}#about" class="py-2 hover:bg-white/10 rounded-lg">About Us</a>
+        <a href="{% url 'registrations:race_list' %}" class="py-2 hover:bg-white/10 rounded-lg">Race Categories</a>
+        <a href="{% url 'registrations:landing' %}#gallery" class="py-2 hover:bg-white/10 rounded-lg">Gallery</a>
+        <a href="{% url 'registrations:landing' %}#contact" class="py-2 hover:bg-white/10 rounded-lg">Contact Us</a>
+        <a href="{% url 'registrations:register' %}" class="py-2 text-orange-600 bg-white font-semibold rounded-lg text-center mt-2 hover:bg-yellow-100">Register</a>
 
         <!--{# Uncomment if you want staff dashboard visible #}
         {# {% if request.user.is_staff %}
