@@ -1,20 +1,52 @@
 {% extends 'registrations/base.html' %}
 {% block title %}Marathon – Races{% endblock %}
 {% block content %}
-<h1 class="text-2xl font-bold mb-6">Upcoming Races</h1>
+<h1 class="text-2xl font-bold mb-6">Races</h1>
 <div class="grid md:grid-cols-2 gap-6">
   {% for race in races %}
-  <div class="bg-white rounded-2xl shadow p-6">
-    <div class="flex items-center justify-between">
-      <h2 class="text-xl font-semibold">{{ race.name }}</h2>
-      <span class="text-sm bg-gray-100 px-2 py-1 rounded">Capacity: {{ race.capacity }}</span>
+  <div class="bg-white rounded-2xl p-4 shadow-lg mb-4">
+    <div class="flex justify-between items-start mb-2">
+      <div>
+        <h2 class="text-xl font-semibold">{{ race.name }}</h2>
+        <p class="text-sm text-gray-600">
+          {{ race.location|title }} • {{ race.date|date:"M j, Y" }} • {{ race.distance }} km
+        </p>
+      </div>
+
+      {# Show capacity only to staff (optional) #}
+      {% if request.user.is_staff %}
+        <span class="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-700">
+          Capacity: {{ race.capacity }}
+        </span>
+      {% endif %}
     </div>
-    <p class="text-gray-600 mt-2">{{ race.location }} • {{ race.date }} • {{ race.distance_km }} km</p>
-    <p class="mt-2 text-sm">Registered: <strong>{{ race.registered }}</strong></p>
-    <div class="mt-4 flex gap-3">
-      <a href="{% url 'registrations:register' %}?race={{ race.id }}" class="px-4 py-2 rounded-xl bg-blue-600 text-white">Register</a>
-      <a href="{% url 'registrations:participants' race.id %}" class="px-4 py-2 rounded-xl bg-gray-200">View Participants</a>
-      <a href="{% url 'registrations:export_csv' race.id %}" class="px-4 py-2 rounded-xl bg-gray-200">Export CSV</a>
+
+    {# Registered count – staff only #}
+    {% if request.user.is_staff %}
+      <p class="text-xs text-gray-500 mb-3">
+        Registered: {{ race.registered_count }}
+      </p>
+    {% endif %}
+
+    <div class="mt-3 flex flex-wrap gap-2">
+      <!-- Public Register button (everyone sees this) -->
+      <a href="{% url 'registrations:register' %}?race={{ race.id }}"
+        class="px-4 py-2 rounded-full bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700">
+        Register
+      </a>
+
+      <!-- Admin-only controls -->
+      {% if request.user.is_staff %}
+        <a href="{% url 'registrations:view_participants' race.id %}"
+          class="px-4 py-2 rounded-full bg-gray-100 text-gray-800 text-sm hover:bg-gray-200">
+          View Participants
+        </a>
+
+        <a href="{% url 'registrations:export_csv' race.id %}"
+          class="px-4 py-2 rounded-full bg-gray-100 text-gray-800 text-sm hover:bg-gray-200">
+          Export CSV
+        </a>
+      {% endif %}
     </div>
   </div>
   {% empty %}
