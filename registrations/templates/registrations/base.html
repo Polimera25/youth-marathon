@@ -54,7 +54,7 @@
 
         <!-- Mobile Menu Button -->
         <div class="md:hidden">
-          <button @click="open = !open" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+          <button @click="open = !open" class="text-white hover:text-yellow-200 focus:outline-none">
             <!-- Hamburger Icon -->
             <svg x-show="!open" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -71,7 +71,7 @@
     </div>
 
     <!-- Mobile Dropdown Menu -->
-    <div x-show="open" class="md:hidden bg-white border-t border-gray-200">
+    <div x-show="open" class="md:hidden bg-white border-t border-gray-200 text-gray-900">
       <div class="flex flex-col space-y-2 px-4 py-3">
         <a href="{% url 'registrations:landing' %}" class="hover:text-blue-600">Home</a>
         <a href="{% url 'registrations:landing' %}#about" class="hover:text-blue-600">About Us</a>
