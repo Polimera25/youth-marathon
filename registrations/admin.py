@@ -16,4 +16,4 @@ class RunnerAdmin(admin.ModelAdmin):
 class RegistrationAdmin(admin.ModelAdmin):
     list_display = ('runner','race','tshirt_size','paid','created_at')
     list_filter = ('race','paid','tshirt_size')
-    search_fields = ('runner__first_name','runner__last_name','runner__email')
+    search_fields = ('runner__first_name','runner__last_name','runner__email','utr_number')
