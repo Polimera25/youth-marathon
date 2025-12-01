@@ -17,3 +17,15 @@ class RegistrationAdmin(admin.ModelAdmin):
     list_display = ('runner','race','tshirt_size','paid','created_at')
     list_filter = ('race','paid','tshirt_size')
     search_fields = ('runner__first_name','runner__last_name','runner__email','utr_number')
+    # ---- Admin Actions ----
+    actions = ["mark_as_paid", "mark_as_unpaid"]
+
+    def mark_as_paid(self, request, queryset):
+        updated = queryset.update(paid=True)
+        self.message_user(request, f"✔ {updated} registration(s) marked as PAID.")
+    mark_as_paid.short_description = "Mark selected registrations as PAID"
+
+    def mark_as_unpaid(self, request, queryset):
+        updated = queryset.update(paid=False)
+        self.message_user(request, f"❌ {updated} registration(s) marked as NOT paid.")
+    mark_as_unpaid.short_description = "Mark selected registrations as NOT PAID"
