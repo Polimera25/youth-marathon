@@ -1,0 +1,65 @@
+{% extends 'registrations/base.html' %}
+{% load static form_extras %}
+
+{% block title %}Payment – Youth Marathon{% endblock %}
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-1">Payment</h1>
+<p class="text-gray-600 mb-6 text-sm">
+  Step 2 of 2 – Complete payment for
+  <span class="font-semibold">{{ registration.race.name }}</span>.
+</p>
+
+<div class="bg-white rounded-2xl shadow p-6 space-y-6">
+
+  <!-- QR + Instructions -->
+  <div class="flex flex-col md:flex-row md:items-center gap-6">
+    <div class="flex-1 text-left">
+      <h2 class="text-lg font-semibold mb-2">Scan & Pay</h2>
+      <p class="text-sm text-gray-600 mb-2">
+        Please scan the QR code using any UPI app and complete the payment.
+      </p>
+      <p class="text-sm text-gray-700">
+        <span class="font-semibold">Amount:</span> ₹299<br>
+        <span class="text-xs text-gray-500">
+          Use your <strong>name + mobile number</strong> as payment note if possible.
+        </span>
+      </p>
+    </div>
+    <div class="w-40 h-40 mx-auto md:mx-0">
+      <!-- put your QR image as static/qr.png -->
+      <img src="{% static 'qr.jpg' %}" alt="UPI QR Code"
+           class="w-full h-full object-contain border rounded-xl shadow">
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- UTR Form -->
+  <form method="post" class="space-y-4">
+    {% csrf_token %}
+
+    <div>
+      <label class="block text-sm font-semibold mb-1">
+        UTR / Transaction ID
+      </label>
+      {{ form.utr_number|as_widget:"class=border rounded-lg p-2 w-full" }}
+      <p class="text-xs text-gray-500 mt-1">
+        After paying, copy the reference / UTR number from your bank or UPI app and paste it here.
+      </p>
+    </div>
+
+    <div class="flex justify-between items-center pt-2">
+      <a href="{% url 'registrations:register' %}"
+         class="text-xs text-gray-500 hover:text-gray-700">
+        ← Edit details
+      </a>
+      <button type="submit"
+              class="px-4 py-2 rounded-xl bg-green-600 text-white hover:bg-green-700">
+        Submit Registration
+      </button>
+    </div>
+  </form>
+
+</div>
+{% endblock %}
