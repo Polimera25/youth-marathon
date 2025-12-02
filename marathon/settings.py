@@ -87,8 +87,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'dev-secret-key-change-me'
 DEBUG = True   # set to False on Render
 
-ALLOWED_HOSTS = ['youth-marathon.onrender.com']   # change to ['yourapp.onrender.com'] in production
-#ALLOWED_HOSTS = ['*'] 
+#ALLOWED_HOSTS = ['youth-marathon.onrender.com']   # change to ['yourapp.onrender.com'] in production
+ALLOWED_HOSTS = ['*'] 
 
 # ---------------- APPS ---------------- #
 
