@@ -3,7 +3,7 @@
 {% load static %}
 
 
-{% block title %}City Marathon 2025{% endblock %}
+{% block title %}Youth Marathon 2026{% endblock %}
 
 {% block content %}
 
@@ -20,9 +20,10 @@
   x-data="{ 
     current: 0, 
     slides: [
-      '{% static "Banner.png" %}', 
+      '{% static "vbanner.png" %}', 
       '{% static "NPG_8131.JPG" %}', 
-      '{% static "NPG_8172.JPG" %}'
+      '{% static "NPG_8172.JPG" %}',
+      '{% static "Banner.png" %}'
     ],
     init() {
       setInterval(() => {
@@ -47,9 +48,15 @@
     >
       <img :src="slide" alt="Marathon Banner" class="w-full h-full object-cover">
       <div class="absolute inset-0 flex flex-col justify-end md:justify-center items-center text-center bg-black bg-opacity-40 text-white px-4 pb-6 md:pb-0">
+        <p class="text-sm sm:text-base md:text-lg mb-4 md:mb-6 max-w-xl">
+          Sri Swami Vivekananda
+        </p>
         <h1 class="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-2 md:mb-4 leading-tight">
             Youth Marathon 2026
         </h1>
+        <p class="text-sm sm:text-base md:text-lg mb-4 md:mb-6 max-w-xl">
+            For the eve of "National Youth day & Sri Swami Vivekananda Jayanthi"
+        </p>
         <p class="text-sm sm:text-base md:text-lg mb-4 md:mb-6 max-w-xl">
             Join the ultimate running experience in Vizag!
         </p>
@@ -57,7 +64,7 @@
         <div class="flex flex-wrap justify-center gap-3 md:gap-8 text-gray-200 mb-4 md:mb-6 text-xs sm:text-sm md:text-base">
             <div>📅 Jan 11, 2026</div>
             <div>📍 Gajuwaka, Visakhaptnam</div>
-            <div>⏰ 4:00 AM</div>
+            <div>⏰ 05:30 AM</div>
         </div>
 
         <!--<div id="countdown" class="text-base sm:text-lg md:text-2xl font-bold mb-4 md:mb-6"></div>-->
