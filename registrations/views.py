@@ -173,6 +173,8 @@ def register(request):
                     "phone": form.cleaned_data.get("phone", ""),
                     "age": form.cleaned_data.get("age"),
                     "gender": form.cleaned_data.get("gender") or "",
+                    'emergency_contact_name': form.cleaned_data.get('emergency_contact_name', ''),
+                    'emergency_contact_phone': form.cleaned_data.get('emergency_contact_phone', ''),
                 },
             )
 
@@ -182,6 +184,8 @@ def register(request):
             runner.phone = form.cleaned_data.get("phone", "")
             runner.age = form.cleaned_data.get("age")
             runner.gender = form.cleaned_data.get("gender") or ""
+            runner.emergency_contact_name = form.cleaned_data.get('emergency_contact_name', '')
+            runner.emergency_contact_phone = form.cleaned_data.get('emergency_contact_phone', '')
             runner.save()
 
             # Create or get Registration

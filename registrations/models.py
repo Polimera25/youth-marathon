@@ -20,25 +20,13 @@ class Runner(models.Model):
     age = models.PositiveIntegerField(validators=[MinValueValidator(5), MaxValueValidator(120)], null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, blank=True)
 
+     # NEW FIELDS
+    emergency_contact_name = models.CharField(max_length=100, blank=True)
+    emergency_contact_phone = models.CharField(max_length=20, blank=True)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name} <{self.email}>"
 
-'''class Registration(models.Model):
-    TSHIRT_CHOICES = [('XS','XS'),('S','S'),('M','M'),('L','L'),('XL','XL'),('XXL','XXL')]
-    runner = models.ForeignKey(Runner, on_delete=models.CASCADE)
-    race = models.ForeignKey(Race, on_delete=models.CASCADE, related_name='registrations')
-    tshirt_size = models.CharField(max_length=4, choices=TSHIRT_CHOICES, default='M')
-    paid = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['runner', 'race'], name='unique_runner_race')
-        ]
-
-    def __str__(self):
-        return f"{self.runner} for {self.race}"
-'''
 
 class Registration(models.Model):
     TSHIRT_CHOICES = [

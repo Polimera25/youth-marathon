@@ -34,6 +34,17 @@
       <label class="block text-sm font-medium">Age</label>
       {{ form.age|as_widget:"class=border rounded-lg p-2 w-full" }}
     </div>
+    <!-- NEW: Emergency contact name -->
+    <div>
+      <label class="block text-sm font-medium">Emergency contact name</label>
+      {{ form.emergency_contact_name|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
+
+    <!-- NEW: Emergency contact number -->
+    <div>
+      <label class="block text-sm font-medium">Emergency contact number</label>
+      {{ form.emergency_contact_phone|as_widget:"class=border rounded-lg p-2 w-full" }}
+    </div>
     <div>
       <label class="block text-sm font-medium">Gender</label>
       {{ form.gender|as_widget:"class=border rounded-lg p-2 w-full" }}
