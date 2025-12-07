@@ -53,60 +53,46 @@
         </button>
       </div>
     </div>-->
-    <div class="flex flex-col md:flex-row gap-8 w-full items-start md:items-center">
+    <!-- Heading + instructions (keep whatever you already have) -->
+    <h2 class="text-xl font-bold">Scan & Pay</h2>
+    <p class="text-gray-600 mt-2">
+      Please scan the QR code using any UPI app and complete the payment.
+    </p>
 
-      <!-- LEFT SIDE -->
-      <div class="md:w-1/2 flex flex-col justify-center">
+    <p class="font-semibold mt-4">
+      Amount: ₹{{ race.amount }}
+    </p>
+    <p class="text-gray-500 text-sm -mt-1">
+      Use your <strong>name + mobile number</strong> as payment note, if possible.
+    </p>
 
-        <h2 class="text-xl font-bold">Scan & Pay</h2>
-        <p class="text-gray-600 mt-2">
-          Please scan the QR code using any UPI app and complete the payment.
-        </p>
+    <!-- QR + UPI block (RIGHT aligned on desktop, centered on mobile) -->
+    <div class="mt-6 flex justify-center md:justify-end">
+      <div class="flex flex-col items-center md:items-end">
 
-        <p class="font-semibold mt-4">
-          Amount: ₹{{ race.amount }}
-        </p>
-        <p class="text-gray-500 text-sm -mt-1 mb-4">
-          Use your <strong>name + mobile number</strong> as payment note.
-        </p>
-
-        <!-- QR BLOCK (center aligned) -->
-        <div class="flex justify-center md:justify-start">
-          <div class="w-44 h-44 md:w-56 md:h-56 bg-white rounded-xl shadow-inner overflow-hidden flex items-center justify-center">
-            <img src="{% static 'QR_code.png' %}" class="w-full h-full object-cover">
-          </div>
+        <!-- QR square -->
+        <div class="w-44 h-44 md:w-56 md:h-56 bg-white rounded-xl shadow-inner overflow-hidden flex items-center justify-center">
+          <img src="{% static 'QR_code.png' %}" alt="Scan to pay" class="w-full h-full object-cover">
         </div>
 
-        <!-- UPI ID -->
-        <div class="mt-4 flex items-center gap-2 max-w-xs">
-          <input type="text" value="pvamsi1025-2@okaxis" readonly
-                class="w-full px-3 py-2 border rounded-lg bg-gray-50 text-center text-sm"/>
-          <button onclick="navigator.clipboard.writeText('pvamsi1025-2@okaxis')"
-                  class="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">
+        <!-- UPI ID + copy button -->
+        <div class="mt-4 flex items-center gap-2 w-full max-w-xs">
+          <input
+            type="text"
+            value="pvamsi1025-2@okaxis"
+            readonly
+            class="w-full px-3 py-2 border rounded-lg bg-gray-50 text-center text-sm"
+          />
+          <button
+            type="button"
+            onclick="navigator.clipboard.writeText('pvamsi1025-2@okaxis')"
+            class="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700"
+          >
             Copy
           </button>
         </div>
-      </div>
-
-      <!-- RIGHT SIDE -->
-      <div class="md:w-1/2 flex flex-col justify-center">
-
-        <label class="font-semibold text-gray-700 mb-2">UTR / Transaction ID</label>
-
-        <input type="text" name="utr" placeholder="Enter UTR / transaction ID"
-              class="w-full px-4 py-3 border rounded-lg text-gray-700 focus:ring">
-        
-        <p class="text-gray-500 text-sm mt-2">
-          After paying, copy the reference / UTR number from UPI app and paste it here.
-        </p>
-
-        <button type="submit"
-                class="mt-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg">
-          Submit Registration
-        </button>
 
       </div>
-
     </div>
 
   </div>
