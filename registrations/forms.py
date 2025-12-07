@@ -73,7 +73,7 @@ class PaymentForm(forms.ModelForm):
         widgets = {
             "utr_number": forms.TextInput(
                 attrs={
-                    "placeholder": "Enter UTr / transaction ID"
+                    "placeholder": "Enter UTR / transaction ID"
                 }
             )
         }
